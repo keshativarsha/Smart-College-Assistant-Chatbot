@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart College Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">SC</div>
+    <div class="brand-info">
+      <h1>Smart College Assistant</h1>
+      <p>College notices, rules, and student deadlines in one place</p>
+    </div>
+    <span class="status" id="system-status"><i></i> Assistant ready</span>
+  </header>
+
+  <main class="layout">
+    <!-- Chat Section -->
+    <section class="chat-panel panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">AI STUDENT ASSISTANT</p>
+          <h2>Ask your college</h2>
+          <p class="muted">Answers are retrieved directly from official documents uploaded in the Knowledge Base.</p>
+        </div>
+        <div class="panel-actions">
+          <button type="button" id="clear-chat-btn" class="secondary-button" title="Clear chat history">Clear Chat</button>
+          <div class="bot-icon" aria-hidden="true">✦</div>
+        </div>
+      </div>
+
+      <div class="suggestions">
+        <button type="button" class="suggestion" data-question="What can you do?">💡 What can you do?</button>
+        <button type="button" class="suggestion" data-question="What are the placement registration requirements?">Placement requirements</button>
+        <button type="button" class="suggestion" data-question="What is the exam timetable?">Exam timetable</button>
+        <button type="button" class="suggestion" data-question="What is the attendance requirement?">Attendance rules</button>
+      </div>
+
+      <div id="messages" class="messages" aria-live="polite">
+        <div class="message assistant">
+          <div class="avatar">SC</div>
+          <div class="bubble">
+            <strong>Hello! 👋 Welcome to Smart College Assistant.</strong>
+            <p>I can help you with college rules, exams, placement criteria, syllabus notices, and deadlines.</p>
+            <p>To get started, ask a question below or upload official college documents (PDF, TXT, MD) in the right panel.</p>
+          </div>
+        </div>
+      </div>
+
+      <form id="chat-form" class="composer">
+        <input id="message-input" type="text" placeholder="Type your college question here... (e.g., What are the placement rules?)" autocomplete="off" required>
+        <button type="submit" id="send-button">Send <span>➤</span></button>
+      </form>
+      <p class="small-note">Prototype verified via document text matching. Always verify critical notices with college authorities.</p>
+    </section>
+
+    <!-- Sidebar Section -->
+    <aside class="side-column">
+      <!-- Knowledge Base Documents -->
+      <section class="panel upload-panel">
+        <p class="eyebrow">KNOWLEDGE BASE</p>
+        <h2>College documents</h2>
+        <p class="muted">Upload searchable PDF, TXT, or MD circulars.</p>
+
+        <form id="upload-form">
+          <label class="upload-box" id="drop-zone" for="document-file">
+            <span class="upload-symbol">↑</span>
+            <strong>Choose or drop a document</strong>
+            <span class="muted small">PDF, TXT, MD · Max 12 MB</span>
+          </label>
+          <input id="document-file" name="file" type="file" accept=".pdf,.txt,.md" required hidden>
+          <p id="selected-file" class="small-note">No file selected</p>
+          <button class="primary-button full-width" type="submit" id="upload-btn">Upload and index</button>
+        </form>
+
+        <div id="upload-status" class="notice" hidden></div>
+
+        <h3 class="subheading">Uploaded documents</h3>
+        <div id="document-list" class="document-list">
+          <p class="muted small">Loading documents...</p>
+        </div>
+      </section>
+
+      <!-- Student Deadlines Tracker -->
+      <section class="panel tasks-panel">
+        <p class="eyebrow">STUDENT ORGANIZER</p>
+        <h2>Deadline tracker</h2>
+        <p class="muted">Save upcoming exam, assignment, or placement dates.</p>
+
+        <form id="task-form" class="task-form">
+          <label for="task-title">Task name
+            <input id="task-title" type="text" placeholder="e.g. Placement registration deadline" required maxlength="200">
+          </label>
+          <div class="form-row">
+            <label for="task-date">Due date
+              <input id="task-date" type="date" required>
+            </label>
+            <label for="task-category">Category
+              <select id="task-category">
+                <option value="Placement">Placement</option>
+                <option value="Exam">Exam</option>
+                <option value="Assignment">Assignment</option>
+                <option value="General" selected>General</option>
+              </select>
+            </label>
+          </div>
+          <button class="primary-button full-width" type="submit" id="task-btn">Add deadline</button>
+        </form>
+
+        <div id="task-status" class="notice" hidden></div>
+
+        <h3 class="subheading">Saved deadlines</h3>
+        <div id="task-list" class="task-list">
+          <p class="muted small">Loading deadlines...</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    Smart College Assistant · Built with Python Flask, SQLite, and Vanilla JS
+  </footer>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
